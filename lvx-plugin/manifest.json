@@ -1,6 +1,8 @@
 {
  "name": "lvx-demo-hello",
- "desc": "demo plugin for source-mechanism test",
+ "version": "0.2.0",
+ "desc": "demo plugin for source-mechanism test (metadata v2)",
+ "dependencies": [],
  "files": [
   {
    "file": "liblvx_demo_hello.so",
