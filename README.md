@@ -109,3 +109,20 @@ lvx plugins                # 查看已加载(运行中)插件
 ## 6. 本仓库即教程样例
 
 `lvx-demo-hello` v0.2.0 就是按上述流程发布的最小插件：源码在根目录、manifest 在 `lvx-plugin/`、topic 已打上。把它 fork 修改即可起步。
+
+
+---
+
+# 官方微调插件：tune_vulkan（快速上手）
+
+主仓库发布页（README）：https://github.com/hdhddhdhd/LVX-RUN
+
+```sh
+lvx install tune_vulkan
+lvx tune --trainer tune_vulkan model.lvx data.txt tuned.lvx
+```
+
+- `data.txt` 支持三种形态：纯文本（每行一条序列）、多行对话块（空行分隔，格式对齐模型 chat 模板）、token-id 行（旧格式）
+- 默认使用**独立显卡**训练（自动避开核显；无独显回退 CPU），`-cpu` 强制 CPU
+- rank-8 LoRA 覆盖 q/k/v/o + ffn gate/up/down，BF16 合并写回；产物直接 `lvx run`/`lvx chat`
+- 包管理：`lvx remove <包名>` 卸载、`lvx upgrade [包名]` 升级、`lvx plugin ls [-a]` 查看（-a 展开文件）
