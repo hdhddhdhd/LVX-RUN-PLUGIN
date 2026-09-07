@@ -60,6 +60,14 @@ int generate(LVXRuntimeHandle *h, const char *prompt, char *out, size_t outsz);
 
 v2 增加会话/采样/多轮：`generate_ex / bench / configure / chat_turn / reset / stats`（可选的 v2s 提供逐 token 流式）。字段布局严格参照 `include/lvx/runtime_api*.h`，不要臆造。
 
+> **S28 会话通用选项扩展**：`LVXSessionOptions` 尾部新增 `ctx_len`（上下文上限）、
+> `kv_cache_type`（0=f16/1=q8_0/2=q4_0）、`system_prompt`（UTF-8，调用期有效、runtime 需拷贝）。
+> 读取新字段必须用 `struct_size >= sizeof(LVXSessionOptions)` 门控；旧核心发来旧
+> struct_size 时新 runtime 应兼容（只读基础字段），旧 runtime 因自身旧 sizeof 自动
+> 忽略尾段。create 期选项（ctx/kv/层计划/GPU 设备号）由核心挂在 `backend_hint` 后缀：
+> `vulkan;ctx=8192;kv=q8_0;plan=g0:20,c0:all`（plan 中 `g0:20`=gpu0 前 20 层、`c0:all`=cpu0 剩余全部；
+> 不认识 `;` 后缀的 runtime 把整个 hint 当后端名忽略即可）。
+
 ## 3. 软件包清单（manifest.json）
 
 仓库默认分支需含目录 `lvx-plugin/`，其中 `manifest.json`：
@@ -95,7 +103,8 @@ v2 增加会话/采样/多轮：`generate_ex / bench / configure / chat_turn / r
 lvx update                 # 刷新包列表（能看到你的仓库）
 lvx install my-plugin      # 按包名安装
 lvx install demo           # 也支持文件名/子串
-lvx plugin ls              # 查看已安装包与版本
+lvx plugin ls              # 查看已安装包与版本（lvx ls plugins 同义）
+lvx ls devices             # 查看 CPU/GPU 设备编号（供 -g/-cpu 参数）
 lvx plugins                # 查看已加载(运行中)插件
 ```
 
