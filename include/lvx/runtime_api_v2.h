@@ -57,6 +57,18 @@ typedef struct LVXSessionOptions {
   int32_t max_tokens;        /* <=0: leave unchanged */
   int32_t stop_token;        /* <0: leave unchanged */
   uint32_t flags;            /* reserved, 0 */
+  /* S28 common-options extension. Every runtime MUST gate reading these on
+     struct_size >= sizeof(LVXSessionOptions) (compiled against this header);
+     older runtimes compiled before this extension keep their own smaller
+     sizeof and simply ignore the trailing bytes. Trailing fields are
+     optional; zero/default values mean "leave unchanged". */
+  uint32_t ctx_len;          /* context length cap in tokens; 0 = default
+                                (runtime default, model kvCap limited) */
+  int32_t kv_cache_type;     /* 0 = f16 (default), 1 = q8_0, 2 = q4_0;
+                                <0 = leave unchanged */
+  const char *system_prompt; /* optional UTF-8 system prompt; NULL = none.
+                                Pointer must stay valid only for the duration
+                                of the call (runtime copies it). */
 } LVXSessionOptions;
 
 typedef struct LVXRuntimeStats {
