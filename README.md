@@ -1,5 +1,9 @@
 # LVX-RUN-PLUGIN — LVX 插件开发教程 & 测试插件仓库
 
+> **中文** | [English](README.en.md)
+>
+> 官方插件调用指南（双语）：[plugins-guide/](plugins-guide/README.md)
+
 本仓库双重身份：**插件开发教程**（本 README）与 **lvx-plugin 测试插件**（topic: `lvx-plugin`，会被 `lvx update` 自动收录）。
 
 - ABI 头文件快照：`include/lvx/*.h`
