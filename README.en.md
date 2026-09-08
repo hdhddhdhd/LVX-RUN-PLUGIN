@@ -156,3 +156,18 @@ JSON) are all sealed inside (LVX Universal Container, `kind=repo`).
   fallback channel.
 - Inspect: `lvx type plugins.lvx` (kind + section table).
 - Repack after editing `plugins.spec`: `lvx_pack plugins.spec plugins.lvx`.
+
+## Store metadata
+
+The repository keeps a **store layer** separate from the install layer for a
+future software store:
+
+- Installation only reads the root `plugins.lvx` (single-file container).
+- **`store.json`** — store-facing metadata per app/plugin: version, title,
+  summary & long description, author, tags, `package` (the .lvx), `media`
+  references, release notes.
+- **`files/`** — showcase media: icon (`icon.png`), screenshots
+  (`screenshots/*.png`), promo video (`demo.mp4`). Display only.
+
+To add an app: add an `apps[]` entry + `files/` assets; repack the install
+container with `lvx_pack plugins.spec plugins.lvx`.

@@ -1,0 +1,39 @@
+{
+  "store": "LVX-RUN-PLUGIN",
+  "kind": "plugin-store",
+  "updated": "2026-09-08",
+  "apps": [
+    {
+      "id": "lvx-demo-hello",
+      "name": "lvx-demo-hello",
+      "title": "Hello demo plugin",
+      "summary": "Demo plugin for LVX plugin/source/registry tests.",
+      "description": "A minimal LVX plugin that registers a 'hello' command. Used to exercise the plugin manager, software-source mechanism and the single-file .lvx container path. Install it once and `lvx hello` should greet you; `lvx plugin ls` lists it.",
+      "kind": "plugin",
+      "version": "0.2.0",
+      "abi": 1,
+      "author": "hdhddhdhd",
+      "license": "MIT",
+      "tags": ["demo", "plugin", "test"],
+      "package": "plugins.lvx",
+      "packageSha256": "",
+      "media": {
+        "icon": "files/icon.png",
+        "screenshots": [
+          "files/screenshots/hello-list.png"
+        ],
+        "video": "files/demo.mp4"
+      },
+      "links": {
+        "homepage": "https://github.com/hdhddhdhd/LVX-RUN-PLUGIN"
+      },
+      "releases": [
+        {
+          "version": "0.2.0",
+          "date": "2026-09-08",
+          "notes": "Single-file container distribution (plugins.lvx); store metadata introduced."
+        }
+      ]
+    }
+  ]
+}

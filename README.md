@@ -157,3 +157,16 @@ Container，`kind=repo`）。
 - 查看内容：`lvx type plugins.lvx`（显示 kind 与 section 表）。
 - 重新打包：改 `plugins.spec` 后 `lvx_pack plugins.spec plugins.lvx`
   （`lvx_pack` 与 `lvx` 同仓库构建）。
+
+## 软件商店元数据（store）
+
+仓库为未来的**软件商店**保留展示层（与安装层分离）：
+
+- 机器安装只认根目录的 `plugins.lvx`（单文件容器）。
+- **`store.json`**：商店读取的元数据——每个应用/插件的版本号、标题、简介与
+  长介绍、作者、标签、`package` 指向的 .lvx、`media` 指向的展示素材等。
+- **`files/`**：展示素材目录（图标 `icon.png`、截图 `screenshots/*.png`、
+  演示视频 `demo.mp4`）。仅用于商店展示，不参与安装。
+
+应用增加时：补一个 `apps[]` 条目 + `files/` 素材；`plugins.lvx` 用
+`lvx_pack plugins.spec plugins.lvx` 重新打包（含其安装信息）。
