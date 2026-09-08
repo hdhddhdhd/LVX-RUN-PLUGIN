@@ -139,3 +139,20 @@ lvx tune --trainer tune_vulkan model.lvx data.txt tuned.lvx
 - Trains on a **discrete GPU** by default (skips iGPUs; falls back to CPU without one); `-cpu` forces CPU
 - rank-8 LoRA over q/k/v/o + ffn gate/up/down projections, BF16 merged write-back; the output works directly with `lvx run`/`lvx chat`
 - Package management: `lvx remove <pkg>` to uninstall, `lvx upgrade [pkg]` to upgrade, `lvx plugin ls [-a]` to inspect (-a expands files)
+
+## Single-file repo
+
+This repository distributes as **one .lvx in the root**: `plugins.lvx` is the
+only machine-facing artifact — plugin binaries, version registry (manifest
+JSON) are all sealed inside (LVX Universal Container, `kind=repo`).
+
+- Install directly:
+  ```
+  lvx install plugins.lvx
+  lvx install /path/to/plugins.lvx
+  ```
+- GitHub topic sources (`github-topic=lvx-plugin`) try the root
+  `plugins.lvx` container first; legacy `lvx-plugin/manifest.json` is the
+  fallback channel.
+- Inspect: `lvx type plugins.lvx` (kind + section table).
+- Repack after editing `plugins.spec`: `lvx_pack plugins.spec plugins.lvx`.

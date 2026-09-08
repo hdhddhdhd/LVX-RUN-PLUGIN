@@ -139,3 +139,21 @@ lvx tune --trainer tune_vulkan model.lvx data.txt tuned.lvx
 - 默认使用**独立显卡**训练（自动避开核显；无独显回退 CPU），`-cpu` 强制 CPU
 - rank-8 LoRA 覆盖 q/k/v/o + ffn gate/up/down，BF16 合并写回；产物直接 `lvx run`/`lvx chat`
 - 包管理：`lvx remove <包名>` 卸载、`lvx upgrade [包名]` 升级、`lvx plugin ls [-a]` 查看（-a 展开文件）
+
+## 单文件仓库（single-file repo）
+
+本仓库按"根目录一个 .lvx"分发：**`plugins.lvx`** 是唯一机器分发物——
+插件二进制、版本注册表（manifest JSON）全部封装在内（LVX Universal
+Container，`kind=repo`）。
+
+- 直接安装：
+  ```
+  lvx install plugins.lvx
+  lvx install /path/to/plugins.lvx
+  ```
+- GitHub topic 源（`github-topic=lvx-plugin`）会自动优先抓取仓库根的
+  `plugins.lvx` 并按容器安装；找不到时回退旧的 `lvx-plugin/manifest.json`
+  格式。
+- 查看内容：`lvx type plugins.lvx`（显示 kind 与 section 表）。
+- 重新打包：改 `plugins.spec` 后 `lvx_pack plugins.spec plugins.lvx`
+  （`lvx_pack` 与 `lvx` 同仓库构建）。
